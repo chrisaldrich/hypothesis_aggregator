@@ -80,14 +80,6 @@ function hypothesis_shortcode( $atts ) {
 						// store annotation locally
 						$annotation_local = $hypothesis->read($value->id);
 
-						// title of post with link to original post
-						$output .= '<a href="http://via.hypothes.is/';
-						$output .= $annotation_local->uri;
-						$output .= '">';
-						$output .= $annotation_local->document->title[0];
-						$output .= '</a>';
-						$output .= '<br/><br/>';
-
 						// grab post image from open graph or Twitter, if available
 						if (is_array($annotation_local->document->twitter->image)) {
 								$image_url = $annotation_local->document->twitter->image[0];
@@ -127,23 +119,6 @@ function hypothesis_shortcode( $atts ) {
 						$output .= '<blockquote>';
 						$output .= $target_info;
 						$output .= '</blockquote><br/>';
-
-						// annotation comment, with username and link to stream
-						if ($annotation_local->text) {
-								$output .= $annotation_local->text;
-								$output .= '<br/><br/>';
-
-						}
-						$account = $annotation_local->user;
-						$output .= 'Curated by <a href="';
-						$output .= "https://hypothes.is/stream?q=user:";
-						list($dump1, $account_name, $dump2) = preg_split('/[:@]/', $account);
-						$output .= $account_name;
-						$output .= '">';
-						$output .= $account_name;
-						$output .= '</a>.<br/>';
-
-						$output .= "<br/><hr/><br/>";
 				}
 				return $output;
 		}
